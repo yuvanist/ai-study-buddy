@@ -79,12 +79,14 @@ def generate_question_set(
     )
 
     response = agent.run(prompt)
-    if isinstance(response, QuestionSet):
-        return response
-    if isinstance(response, BaseModel):
-        return QuestionSet.model_validate(response.model_dump())
-    if isinstance(response, dict):
-        return QuestionSet.model_validate(response)
+    # Agno returns a RunResponse object; the structured output is in response.content
+    content = getattr(response, 'content', response)
+    if isinstance(content, QuestionSet):
+        return content
+    if isinstance(content, BaseModel):
+        return QuestionSet.model_validate(content.model_dump())
+    if isinstance(content, dict):
+        return QuestionSet.model_validate(content)
     raise ValueError("Model did not return a structured QuestionSet.")
 
 
@@ -191,12 +193,13 @@ if qset:
     for idx, q in enumerate(qset.questions, start=1):
         st.markdown(f"**Q{idx}. {q.question}**")
         if isinstance(q, MultipleChoiceQuestion):
-            for opt in q.options:
-                bullet = "✅" if opt.strip().lower() == q.answer.strip().lower() else "•"
-                st.write(f"{bullet} {opt}")
-        st.write(f"**Answer:** {q.answer}")
-        if q.explanation:
-            st.caption(q.explanation)
+            # Show options without revealing the answer
+            for i, opt in enumerate(q.options):
+                st.write(f"{chr(65 + i)}) {opt}")
+        with st.expander("🔍 Click to reveal answer"):
+            st.write(f"**Answer:** {q.answer}")
+            if q.explanation:
+                st.caption(f"💡 {q.explanation}")
         st.markdown("---")
 
     download_text = format_for_download(qset)
