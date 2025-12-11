@@ -17,7 +17,7 @@ load_dotenv()
 # ---------- Pydantic models for structured output ----------
 class MultipleChoiceQuestion(BaseModel):
     question: str
-    options: conlist(str, min_items=2)
+    options: conlist(str, min_length=2)
     answer: str
     explanation: Optional[str] = None
 
