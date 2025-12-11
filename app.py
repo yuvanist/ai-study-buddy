@@ -124,16 +124,15 @@ with st.sidebar:
     provider = st.radio("Provider", ["Groq", "OpenAI"], index=0)
     model_options = {
         "Groq": [
-            "openai/gpt-oss-20b",
-            "openai/gpt-oss-120b",
-            "openai/gpt-oss-safeguard-20b",
-            "moonshotai/kimi-k2-instruct-0905",
-            "meta-llama/llama-4-maverick-17b-128e-instruct",
-            "meta-llama/llama-4-scout-17b-16e-instruct",
+            "llama-3.3-70b-versatile",
+            "llama-3.1-8b-instant",
+            "mixtral-8x7b-32768",
+            "gemma2-9b-it",
         ],
         "OpenAI": [
-            "gpt-5.1-mini",
-            "gpt-5.1-nano",
+            "gpt-4o",
+            "gpt-4o-mini",
+            "gpt-3.5-turbo",
         ],
     }
     model_name = st.selectbox("Model", model_options[provider])
