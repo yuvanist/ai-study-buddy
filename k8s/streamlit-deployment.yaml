@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: streamlit
-          image: gcr.io/PROJECT_ID/study-buddy:latest
+          image: us-central1-docker.pkg.dev/andela-dg/study-buddy-repo/study-buddy:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8501
