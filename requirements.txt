@@ -1,0 +1,7 @@
+streamlit
+agno
+openai
+groq
+pydantic
+python-dotenv
+requests
